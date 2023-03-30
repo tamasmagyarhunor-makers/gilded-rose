@@ -120,6 +120,12 @@ RSpec.describe GildedRose do
       test_rose.update_quality
       expect(test_rose.items[0].to_s).to eq("Backstage passes to a TAFKAL80ETC concert, -3, 0")
     end
+    it "quality can't go past 50 " do
+      test_pass = Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 50)
+      test_rose = GildedRose.new([test_pass])
+      test_rose.update_quality
+      expect(test_rose.items[0].to_s).to eq("Backstage passes to a TAFKAL80ETC concert, 4, 50")
+    end
   end
 
 
