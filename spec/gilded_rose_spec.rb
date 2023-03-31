@@ -127,6 +127,26 @@ RSpec.describe GildedRose do
       expect(test_rose.items[0].to_s).to eq("Backstage passes to a TAFKAL80ETC concert, 4, 50")
     end
   end
-
+  
+  context "Add new item type" do
+    it "Conjured data type degrades -2 before being out of date" do
+      test_conjured = Item.new("Conjured", 5, 20)
+      test_rose = GildedRose.new([test_conjured])
+      test_rose.update_quality
+      expect(test_rose.items[0].to_s).to eq("Conjured, 4, 18")
+    end
+    it "Conjured data type degrades -4 after going out of date" do
+      test_conjured = Item.new("Conjured", -2, 20)
+      test_rose = GildedRose.new([test_conjured])
+      test_rose.update_quality
+      expect(test_rose.items[0].to_s).to eq("Conjured, -3, 16")
+    end
+    it "Conjured data type can't go below 0 quality" do
+      test_conjured = Item.new("Conjured", -2, 1)
+      test_rose = GildedRose.new([test_conjured])
+      test_rose.update_quality
+      expect(test_rose.items[0].to_s).to eq("Conjured, -3, 0")
+    end
+  end
 
 end

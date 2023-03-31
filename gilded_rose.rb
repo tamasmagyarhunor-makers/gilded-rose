@@ -26,6 +26,8 @@ class GildedRose
         alter_item_simple(item, 1, 1)
       when /Backstage/ 
         alter_item_complex(item)
+      when /Conjured/
+        alter_item_simple(item, -2, -4)
       else 
         alter_item_simple(item)
       end 
