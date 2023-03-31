@@ -62,7 +62,7 @@ RSpec.describe GildedRose do
     end
   end
 
-  xcontext "Aged Brie special rules" do
+  context "Aged Brie special rules" do
     it "quality always goes up 1" do
       test_brie = Item.new("Aged Brie", 5, 5)
       test_rose = GildedRose.new([test_brie])
@@ -77,7 +77,7 @@ RSpec.describe GildedRose do
     end
   end
 
-  xcontext "Backstage special rules" do
+  context "Backstage special rules" do
     it "quality always goes up 1 in normal lead in" do
       test_pass = Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 5)
       test_rose = GildedRose.new([test_pass])
