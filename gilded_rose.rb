@@ -14,7 +14,8 @@ class GildedRose
 
   def update_quality()
     @items.each do |item|
-      alter_item_by_params(item)
+      next if item.name.include?('Sulfuras')
+      alter_item_by_params(item) 
       item.sell_in -= 1
     end
   end

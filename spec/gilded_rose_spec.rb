@@ -47,7 +47,7 @@ RSpec.describe GildedRose do
     end
   end
 
-  xcontext "Sulfaras items don't change anything" do
+  context "Sulfaras items don't change anything" do
     it "sulfuras doesn't change" do
       test_sulfuras = Item.new("Sulfuras, Hand of Ragnaros", 5, 5)
       test_rose = GildedRose.new([test_sulfuras])
