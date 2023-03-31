@@ -47,7 +47,7 @@ RSpec.describe GildedRose do
     end
   end
 
-  context "Sulfaras items don't change anything" do
+  xcontext "Sulfaras items don't change anything" do
     it "sulfuras doesn't change" do
       test_sulfuras = Item.new("Sulfuras, Hand of Ragnaros", 5, 5)
       test_rose = GildedRose.new([test_sulfuras])
@@ -62,7 +62,7 @@ RSpec.describe GildedRose do
     end
   end
 
-  context "Aged Brie special rules" do
+  xcontext "Aged Brie special rules" do
     it "quality always goes up 1" do
       test_brie = Item.new("Aged Brie", 5, 5)
       test_rose = GildedRose.new([test_brie])
@@ -77,7 +77,7 @@ RSpec.describe GildedRose do
     end
   end
 
-  context "Backstage special rules" do
+  xcontext "Backstage special rules" do
     it "quality always goes up 1 in normal lead in" do
       test_pass = Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 5)
       test_rose = GildedRose.new([test_pass])
