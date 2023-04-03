@@ -1,41 +1,40 @@
 class GildedRose
-
+  
   attr_reader :items
-
+  
   def initialize(items)
     @items = items
   end
-
-  def alter_item_simple(item, in_date_change = -1, out_of_date_change = -2)
-    item.sell_in > 0 ? item.quality += in_date_change : item.quality += out_of_date_change
-  end
-
-  def alter_item_complex(item, in_date_change = 1, value_1 = 2, day_1 = 10, value_2 = 3, day_2 = 5, value_3 = 0, day_3 = 0)
-    item.quality += in_date_change if item.sell_in > day_1
-    item.quality += value_1 if item.sell_in.between?(day_2 + 1, day_1)
-    item.quality += value_2 if item.sell_in <= day_2
-    item.quality = value_3 if item.sell_in <= day_3
-  end
-
+  
   def update_quality()
     @items.each do |item|
-      case item.name
-      when /Sulfuras/
-        next
-      when /Aged Brie/ 
-        alter_item_simple(item, 1, 1)
-      when /Backstage/ 
-        alter_item_complex(item)
-      when /Conjured/
-        alter_item_simple(item, -2, -4)
-      else 
-        alter_item_simple(item)
-      end 
+      alter_indiv_params(item, *PARAMS_HASH["#{item.name}"])
+      alter_common_params(item)
+    end
+  end
+  
+  private
+
+  def alter_indiv_params(item, in_date = -1, out_of_date = -2, qual_0_at_0 = false, ten_day_extra = 0, five_day_extra = 0)
+    item.sell_in > 0 ? item.quality += in_date : item.quality += out_of_date
+    item.quality += ten_day_extra if item.sell_in <= 10
+    item.quality += five_day_extra if item.sell_in <= 5
+    item.quality = 0 if qual_0_at_0 && item.sell_in <= 0
+  end
+
+  def alter_common_params(item)
       item.sell_in -= 1
       item.quality = 50 if item.quality > 50
       item.quality = 0 if item.quality < 0
-    end
   end
+
+  PARAMS_HASH = {
+    "Aged Brie" => [1,1],
+    "Backstage passes to a TAFKAL80ETC concert" => [1,0,true,1,1],
+    "Sulfuras, Hand of Ragnaros" => [0,0],
+    "Conjured Item" => [-2,-4]
+  }
+
 end
 
 class Item

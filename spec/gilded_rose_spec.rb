@@ -52,13 +52,13 @@ RSpec.describe GildedRose do
       test_sulfuras = Item.new("Sulfuras, Hand of Ragnaros", 5, 5)
       test_rose = GildedRose.new([test_sulfuras])
       test_rose.update_quality
-      expect(test_rose.items[0].to_s).to eq("Sulfuras, Hand of Ragnaros, 5, 5")
+      expect(test_rose.items[0].to_s).to eq("Sulfuras, Hand of Ragnaros, 4, 5")
     end
     it "sulfuras doesn't change" do
-      test_sulfuras = Item.new("Sulfuras, Hand of Ragnaros", 5, 55)
+      test_sulfuras = Item.new("Sulfuras, Hand of Ragnaros", 5, 50)
       test_rose = GildedRose.new([test_sulfuras])
       test_rose.update_quality
-      expect(test_rose.items[0].to_s).to eq("Sulfuras, Hand of Ragnaros, 5, 55")
+      expect(test_rose.items[0].to_s).to eq("Sulfuras, Hand of Ragnaros, 4, 50")
     end
   end
 
@@ -130,22 +130,22 @@ RSpec.describe GildedRose do
   
   context "Add new item type" do
     it "Conjured data type degrades -2 before being out of date" do
-      test_conjured = Item.new("Conjured", 5, 20)
+      test_conjured = Item.new("Conjured Item", 5, 20)
       test_rose = GildedRose.new([test_conjured])
       test_rose.update_quality
-      expect(test_rose.items[0].to_s).to eq("Conjured, 4, 18")
+      expect(test_rose.items[0].to_s).to eq("Conjured Item, 4, 18")
     end
     it "Conjured data type degrades -4 after going out of date" do
-      test_conjured = Item.new("Conjured", -2, 20)
+      test_conjured = Item.new("Conjured Item", -2, 20)
       test_rose = GildedRose.new([test_conjured])
       test_rose.update_quality
-      expect(test_rose.items[0].to_s).to eq("Conjured, -3, 16")
+      expect(test_rose.items[0].to_s).to eq("Conjured Item, -3, 16")
     end
     it "Conjured data type can't go below 0 quality" do
-      test_conjured = Item.new("Conjured", -2, 1)
+      test_conjured = Item.new("Conjured Item", -2, 1)
       test_rose = GildedRose.new([test_conjured])
       test_rose.update_quality
-      expect(test_rose.items[0].to_s).to eq("Conjured, -3, 0")
+      expect(test_rose.items[0].to_s).to eq("Conjured Item, -3, 0")
     end
   end
 
