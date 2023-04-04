@@ -1,4 +1,4 @@
-require_relative "../gilded_rose."
+require_relative "../gilded_rose_OOP."
 
 RSpec.describe GildedRose do
 
@@ -146,6 +146,17 @@ RSpec.describe GildedRose do
       test_rose = GildedRose.new([test_conjured])
       test_rose.update_quality
       expect(test_rose.items[0].to_s).to eq("Conjured Item, -3, 0")
+    end
+  end
+
+  context "Loops work" do
+      it "2 different items in items array both update correctly" do
+      test_brie = Item.new("Aged Brie", -2, 6)
+      test_eggs = Item.new("Eggs", 5, 6)
+      test_rose = GildedRose.new([test_brie, test_eggs])
+      test_rose.update_quality
+      expect(test_rose.items[0].to_s).to eq("Aged Brie, -3, 7")
+      expect(test_rose.items[1].to_s).to eq("Eggs, 4, 5")
     end
   end
 

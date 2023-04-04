@@ -1,4 +1,30 @@
-# Gilded rose tech test
+# Gilded Rose Kata
+
+## Approach 1: Using Object Oriented Principles
+
+**Full refactoring of the problem adhering to OOP.** 
+
+- Within the GildedRose class, I used a hash and a looping method to serve as a factory (rather than an external factory class). I did this for ease of data management and user update, and to avoid long conditionals.
+
+- The extra manufactured classes will mutate the item instance (unaltered - as per instructions), and then return that item instance back to the same items array.
+
+*To add a new item to the store that does not behave in the standard way, you must do 3 things; 1st, create a new class based on the template of the other exceptional item classes such as AgedBrie or Sulfuras, and implement the behaviour you want on the 'update_quality' polymorphed method. 2nd, add the matching item.name string and appropriate class name to the CLASS_CHOICE hash which is found in the GildedRose class, and 3rd create a new require_relative reference to the new class file at the top of the gilded_rose_OOP file.* 
+
+## Approach 2: Simple for user
+
+**I designed this approach to use the least code. Not only to make the program run and avoid massive conditionals, but also for a new user unacquainted with the previous developers' work to be able to input a new item and its rules with the smallest possible addition of code.**
+
+- Keeping all code within the GildedRose class, I added 2 new methods and a hash. Update_quality method loops through all items and calls these 2 methods on them. 
+
+- 1 method covers common behaviour (bounding quality values and moving sell_in day on by one) 
+
+- The other method covers the quality change. The default arguments the method operates with mean that in the absense of calling the method with arguments, the defaults will be used (which is as wanted). Any arguments provided will over-ride the defaults and mutate the item.quality as desired. The loop will look in the hash for a item.name match, and if it finds will then take the array of values and provide it to the function as a set of arguments, allowing a user to input a new abnormal item as a single new entry into the hash. The downside here is the complexity that may ensue if new quality changing behaviour were needed (eg multiply x2 for each day closer to sell_in), as you'd need to add new arguments to the alter_indiv_params method.
+
+*To add a new item to the store that does not behave in the standard way, all you need to do is add the item.name to the ITEM_PARAMS hash in the GildedRose class, along with the parameters you want it to input to the method as a hash. eg { "Conjured Item" => [-2,-4] }. If you need to add further quality-altering behaviour that is not presently coded for, then you can add additional arguments to the alter_indiv_params method, and provide a default of 0 so that other item types still behave as expected without explicit input.*
+
+
+### Kata Instructions:
+
 This is a well known kata developed by Terry Hughes. This is commonly used as a tech test to assess a candidate's ability to read, refactor and extend legacy code.
 Here is the text of the kata:
 
@@ -24,20 +50,3 @@ Choose legacy code (translated by Emily Bache) in the language of your choice. T
 You don't need to clone the repo if you don't want to. Feel free to copy the ruby code into a new folder and write your tests from scratch.
 
 HINT: Test first FTW!
-
-NOTES:
-Regular items rules to start with.
-
-Sulfuras special rule is that nothing changes, selected by 'name starts with'
-
-Aged Brie special rule is that quality always goes up 1 step, regardless of sell by date. selected by 'name starts with'
-
-Backstage passes special rules are: if sell in > 10 +1 quality, if sellin is 6-10 inc +2 quality, and if sellin is 1-5 inc +3 quality, if sellin is <1 then quality = 0 selected by 'name starts with'
-
-Adding a new special case where name begins with Conjured, rule is 2x quality shift vs normal item
-
-@items seems to be an array of Item class instances, can test as such
-
-## what are universals? Quality has to be between 0 and 50 inc, make use of that
-## function for each special case and normal case
-## Conjured can make use of normal class but do it as a 2x (could pass in the multiplier as an argument vs default)
